@@ -363,7 +363,7 @@ def run_scattered_scenario():
 
 if __name__ == '__main__':
     # Run scenario 1
-    # run_narrow_passage_scenario()
+    run_narrow_passage_scenario()
 
     # Run scenario 2 (Comment out the line above and uncomment the line below)
-    run_scattered_scenario()
+    # run_scattered_scenario()
