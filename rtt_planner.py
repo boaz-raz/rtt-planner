@@ -65,7 +65,7 @@ class RRTPlanner:
         p_translated_x = px - rx
         p_translated_y = py - ry
 
-        cos_theta = np.cos(-rtheta) 
+        cos_theta = np.cos(-rtheta)
         sin_theta = np.sin(-rtheta)
 
         p_local_x = p_translated_x * cos_theta - p_translated_y * sin_theta
@@ -115,7 +115,7 @@ class RRTPlanner:
             new_x = q_near.x + dx * scale
             new_y = q_near.y + dy * scale
             new_theta = q_near.theta + d_theta * scale
-
+        else:
             new_x = q_rand.x
             new_y = q_rand.y
             new_theta = q_rand.theta
@@ -171,7 +171,6 @@ class RRTPlanner:
         return path
 
 # --- Visualization Functions ---
-
 def plot_static_environment(ax, planner, title="RRT Planning..."):
     """Draws the static parts of the environment."""
     ax.clear() # Clear previous plot
@@ -207,13 +206,13 @@ def plot_final_path(ax, planner, robot_display_indices):
             x, y, theta = planner.path[i]
             corners = planner._get_robot_corners(x, y, theta)
 
-            robot_footprint = patches.Polygon(corners, closed=True, 
-                                              fill=False, edgecolor='red', 
-                                              linewidth=1.0, alpha=0.8, 
+            robot_footprint = patches.Polygon(corners, closed=True,
+                                              fill=False, edgecolor='red',
+                                              linewidth=1.0, alpha=0.8,
                                               linestyle='--')
             ax.add_patch(robot_footprint)
 
-            ax.plot([x, x + planner.robot_L/2 * np.cos(theta)], 
+            ax.plot([x, x + planner.robot_L/2 * np.cos(theta)],
                     [y, y + planner.robot_L/2 * np.sin(theta)], 'r-')
 
     handles, labels = ax.get_legend_handles_labels()
@@ -221,8 +220,6 @@ def plot_final_path(ax, planner, robot_display_indices):
         handles.append(plt.Line2D([0], [0], color='r', linewidth=2, label='Final Path'))
         labels.append('Final Path')
     ax.legend(handles=handles, labels=labels)
-
-# --- Main Planning Loop ---
 
 def run_planning_animation(planner, scenario_name=""):
     """
@@ -260,11 +257,11 @@ def run_planning_animation(planner, scenario_name=""):
 
                     path_found = True
                     print(f"Path found in {i+1} iterations!")
-                    break 
+                    break
 
         if (i + 1) % planner.animation_update_rate == 0:
             ax.set_title(f"RRT ({scenario_name}) - Iteration {i+1}/{planner.max_iter}")
-            plt.pause(0.001) 
+            plt.pause(0.001)
 
     end_time = time.time()
     print(f"Planning took {end_time - start_time:.2f} seconds.")
@@ -277,8 +274,8 @@ def run_planning_animation(planner, scenario_name=""):
         robot_display_indices = [0]
         path_len = len(planner.path)
         robot_display_indices.extend([
-            int(path_len * 0.33), 
-            int(path_len * 0.66), 
+            int(path_len * 0.33),
+            int(path_len * 0.66),
             path_len - 1
         ])
         robot_display_indices = sorted(list(set(robot_display_indices)))
@@ -292,8 +289,6 @@ def run_planning_animation(planner, scenario_name=""):
         ax.set_title(title)
 
     plt.show()
-
-# --- NEW: Scenario Definitions ---
 
 def run_narrow_passage_scenario():
     """SCENARIO 1: The U-shaped narrow passage."""
@@ -366,11 +361,9 @@ def run_scattered_scenario():
     run_planning_animation(planner, scenario_name="Scattered")
 
 
-# --- Main Execution ---
-
 if __name__ == '__main__':
     # Run scenario 1
-    run_narrow_passage_scenario()
+    # run_narrow_passage_scenario()
 
     # Run scenario 2 (Comment out the line above and uncomment the line below)
-    # run_scattered_scenario()
+    run_scattered_scenario()
